@@ -26,16 +26,39 @@ namespace Parte1
 
             ExibirDiagrama();
 
-            string caminhoArquivo = "entradas.txt";
+            string[] linhas = LerArquivoEntrada();
+            if (linhas.Length > 0)
+                ProcessarCadeias(linhas);
+        }
 
-            if (!File.Exists(caminhoArquivo))
+        static void ExibirDiagrama()
+        {
+            Console.WriteLine("============== TABELA DE TRANSIÇÕES (AFD) =================");
+            Console.WriteLine("Estado Atual\t| Símbolo Lido\t| Próximo Estado");
+            Console.WriteLine("-----------------------------------------------------------");
+            foreach (var transicao in Del)
             {
-                Console.WriteLine($"\n[ERRO] O arquivo '{caminhoArquivo}' não foi encontrado.");
+                Console.WriteLine($"{transicao.Key.estado}\t\t| {transicao.Key.simbolo}\t\t| {transicao.Value}");
+            }
+            Console.WriteLine("===========================================================");
+        }
+
+        static string[] LerArquivoEntrada()
+        {
+            string arquivo = "entradas.txt";
+
+            if (!File.Exists(arquivo))
+            {
+                Console.WriteLine($"\n[ERRO] O arquivo '{arquivo}' não foi encontrado.");
                 Console.WriteLine("Certifique-se de que ele foi criado e suas Propriedades estão como 'Copiar se for mais novo'.");
-                return;
+                return Array.Empty<string>();
             }
 
-            string[] linhas = File.ReadAllLines(caminhoArquivo);
+            return File.ReadAllLines(arquivo);
+        }
+
+        static void ProcessarCadeias(string[] linhas)
+        {
             Console.WriteLine("\n=================== PROCESSANDO CADEIAS ===================");
 
             foreach (string linha in linhas)
@@ -77,18 +100,6 @@ namespace Parte1
             }
 
             return F.Contains(estadoAtual);
-        }
-
-        static void ExibirDiagrama()
-        {
-            Console.WriteLine("============== TABELA DE TRANSIÇÕES (AFD) =================");
-            Console.WriteLine("Estado Atual\t| Símbolo Lido\t| Próximo Estado");
-            Console.WriteLine("-----------------------------------------------------------");
-            foreach (var transicao in Del)
-            {
-                Console.WriteLine($"{transicao.Key.estado}\t\t| {transicao.Key.simbolo}\t\t| {transicao.Value}");
-            }
-            Console.WriteLine("===========================================================");
         }
     }
 }
