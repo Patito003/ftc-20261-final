@@ -11,13 +11,13 @@ namespace Parte2
 
         static void Main(string[] args)
         {
-            string[] linhas = LerArquivoDeEntradas();
+            string[] linhas = LerArquivoEntrada();
 
             if (linhas.Length > 0)
                 ProcessarCadeias(linhas);
         }
 
-        static string[] LerArquivoDeEntradas()
+        static string[] LerArquivoEntrada()
         {
             string nomeArquivo = "entradas_ap.txt";
 
